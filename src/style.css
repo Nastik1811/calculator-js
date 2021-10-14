@@ -1,7 +1,7 @@
 :root {
     --dark-color: rgb(53, 53, 54);
     --light-color: rgb(255, 255, 255);
-    --accent-color: rgb(5, 255, 234);
+    --accent-color: #00ff62;
     --background-color: var(--dark-color);
     --text-color: var(--light-color);
     font-size: 24px;
@@ -15,7 +15,7 @@
 
 html,
 body {
-    height: 100%;
+    min-height: 100%;
 }
 
 body {
@@ -27,11 +27,9 @@ body {
         var(--accent-color),
         rgb(240, 239, 239)
     );
-    background: linear-gradient(
-        -35deg,
-        var(--accent-color),
-        rgb(240, 239, 239)
-    );
+    background: linear-gradient(180deg, var(--accent-color), rgb(36, 36, 36));
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 #root {
@@ -49,26 +47,32 @@ body {
 }
 
 .calculator {
+    margin-top: 25px;
     display: grid;
     grid-template-rows: 20px 1fr auto;
     gap: 28px;
     max-width: 900px;
     width: auto;
-    background-color: var(--background-color);
-    border-radius: 10px;
-    background-color: var(--dark-color);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    background: -webkit-linear-gradient(
+        -35deg,
+        var(--accent-color),
+        rgb(37, 37, 37)
+    );
+    background: linear-gradient(0deg, rgb(17, 17, 17), rgb(39, 39, 39));
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-shadow: 3px 10px 15px rgba(0, 0, 0, 0.26);
+
     padding: 40px;
 }
 
 .display {
-    display: grid;
-    grid-template-rows: 1fr 2fr;
+    display: flex;
+    flex-direction: row-reverse;
     border-bottom: 2px solid var(--accent-color);
     height: 100%;
     padding: 10px 5px;
-    justify-items: end;
-    align-items: end;
 }
 
 #preview {
@@ -77,7 +81,7 @@ body {
 }
 
 #result {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     background-color: transparent;
     border: none;
     outline: transparent;
@@ -112,7 +116,7 @@ body {
 .advanced-operations {
     display: grid;
     grid-template-rows: repeat(5, 1fr);
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
 }
 
@@ -125,46 +129,43 @@ body {
     height: 68px;
     /* border: 1px solid rgba(0, 0, 0, 0.3); */
     border-radius: 8px;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
-
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1s);
     border: none;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(40, 40, 40, 1);
     color: inherit;
     font-size: inherit;
     transition: ease-in;
 }
 
-.key:hover {
-    color: var(--accent-color);
-    background-color: rgba(0, 0, 0, 0.4);
-    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3);
-}
-
+.key:hover,
 .key:focus {
-    outline: none;
-    background-color: rgba(0, 0, 0, 0.5);
+    color: var(--accent-color);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-.key-operator {
+.key-main {
+    opacity: 1;
     background-color: var(--accent-color);
     border: 1px solid var(--accent-color);
     color: black;
 }
 
-.key-operator:hover {
+.key-main:hover {
+    opacity: 0.8;
     color: black;
     background-color: var(--accent-color);
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3), 0px 0px 8px rgba(0, 0, 0, 0.5);
 }
 
-.key-operator:focus {
+.key-main:focus {
     outline: none;
+    opacity: 0.8;
+    color: black;
     background-color: var(--accent-color);
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3), 0px 0px 8px rgba(0, 0, 0, 0.5);
 }
 
 .key-numeric {
-    background-color: rgba(0, 0, 0, 0.3);
 }
 
 .key-extened {
