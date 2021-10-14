@@ -1,4 +1,5 @@
-/* eslint-disable spaced-comment */
+import { isBinary, isUnary } from './helper'
+
 export const APP_STATE = {
     ON_FIRST_OPERAND: 'first operand',
     READY_FOR_SECOND_OPERAND: 'ready for second operand',
@@ -7,17 +8,22 @@ export const APP_STATE = {
 }
 
 export default class Calculator {
-    constructor($resultNode) {
-        this.nextOperation = null
-        this.appState = APP_STATE.FINISHED
+    constructor($resultNode, createCommand) {
         this.$resultNode = $resultNode
-        this.currentValue = this.$resultNode.innerText
-        this.result = 0
-        this.commandHistory = []
+        this.createCommand = createCommand
+        this.setDefaultState()
     }
 
-    undo() {
-        return this.result
+    setDefaultState() {
+        this.currentValue = '0'
+        this.appState = APP_STATE.FINISHED
+        this.reset()
+        this.render()
+    }
+
+    reset() {
+        this.savedValue = null
+        this.nextOperation = null
     }
 
     enterDigit(value) {
@@ -35,40 +41,20 @@ export default class Calculator {
                 this.setState(APP_STATE.ON_SECOND_OPERAND)
                 break
             case APP_STATE.FINISHED:
-                this.setCurrentValue(value)
                 this.setState(APP_STATE.ON_FIRST_OPERAND)
+                this.setCurrentValue(value)
                 break
             default:
-                this.setState(APP_STATE.FINISHED)
+                this.setCurrentValue(value)
         }
     }
 
     addDecimalPoint() {
+        if (this.appState === APP_STATE.FINISHED) {
+            this.setState(APP_STATE.ON_FIRST_OPERAND)
+        }
         if (!this.currentValue.includes('.')) {
             this.setCurrentValue(`${this.currentValue}.`)
-        }
-    }
-
-    enterOperator(operator) {
-        switch (this.appState) {
-            case APP_STATE.ON_FIRST_OPERAND:
-                this.setResult(this.currentValue)
-                this.setOperator(operator)
-                this.setState(APP_STATE.READY_FOR_SECOND_OPERAND)
-                break
-            case APP_STATE.READY_FOR_SECOND_OPERAND:
-                this.setOperator(operator)
-                break
-            case APP_STATE.ON_SECOND_OPERAND:
-                //execute command
-                //createCommand(nextOperation, firstOperand, currentValue.innerHTML)
-                break
-            case APP_STATE.FINISHED:
-                this.setCurrentValue('0')
-                this.appState = APP_STATE.ON_FIRST_OPERAND
-                break
-            default:
-                this.appState = APP_STATE.FINISHED
         }
     }
 
@@ -81,20 +67,86 @@ export default class Calculator {
         this.render()
     }
 
-    setResult(value) {
-        this.result = parseFloat(value)
+    setOperation(operator) {
+        if (isUnary(operator)) {
+            this.setUnaryOperation(operator)
+        } else if (isBinary(operator)) {
+            this.setBinOperation(operator)
+        } else {
+            throw new Error('Unsupported operation')
+        }
     }
 
-    setOperator(operator) {
+    setUnaryOperation(operator) {
+        if (this.nextOperation) {
+            this.calculate()
+        }
         this.nextOperation = operator
+        this.calculate()
     }
 
-    clear() {
-        this.setOperator(null)
-        this.setResult(0)
-        this.appState = APP_STATE.FINISHED
-        this.setCurrentValue('0')
+    setBinOperation(operator) {
+        switch (this.appState) {
+            case APP_STATE.ON_FIRST_OPERAND:
+                this.savedValue = this.currentValue
+                this.setState(APP_STATE.READY_FOR_SECOND_OPERAND)
+                this.nextOperation = operator
+                break
+            case APP_STATE.READY_FOR_SECOND_OPERAND:
+                this.nextOperation = operator
+                break
+            case APP_STATE.ON_SECOND_OPERAND:
+                this.calculate()
+                this.savedValue = this.currentValue
+                this.nextOperation = operator
+                break
+            case APP_STATE.FINISHED:
+                this.setCurrentValue('0')
+                this.appState = APP_STATE.READY_FOR_SECOND_OPERAND
+                this.nextOperation = operator
+                break
+            default:
+                this.appState = APP_STATE.FINISHED
+        }
     }
+
+    calculate() {
+        const command = this.createCommand(
+            this.nextOperation,
+            this.currentValue,
+            this.savedValue
+        )
+        const result = command.execute()
+        this.setCurrentValue(result.toString())
+        this.setState(APP_STATE.READY_FOR_SECOND_OPERAND)
+    }
+
+    finish() {
+        if (this.nextOperation) {
+            this.calculate()
+        }
+        this.setState(APP_STATE.FINISHED)
+        this.reset()
+    }
+
+    // renderPreview() {
+    //     // eslint-disable-next-line no-console
+    //     console.log(this.appState)
+    //     switch(this.appState) {
+    //         case APP_STATE.ON_FIRST_OPERAND:
+    //             this.$previewNode.innerText = `${this.currentValue}`
+    //             break
+    //         case APP_STATE.READY_FOR_SECOND_OPERAND:
+    //             this.$previewNode.innerText = `${this.savedValue} ${this.nextOperation}`
+    //             break
+    //         case APP_STATE.ON_SECOND_OPERAND:
+    //             this.$previewNode.innerText = `${this.savedValue} ${this.nextOperation} ${this.currentValue}`
+    //             break
+    //         default:
+    //             this.$previewNode.innerText = `0`
+    //     }
+
+    // }
 
     render() {
         this.$resultNode.innerText = this.currentValue

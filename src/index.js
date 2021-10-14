@@ -2,24 +2,38 @@
 import './style.css'
 
 import Calculator from './Calculator'
+import { createCommand } from './helper'
 
-const numericButtons = document.querySelectorAll('.key-numeric')
-const clearBtn = document.querySelector('#clear-btn')
+const numericBtns = document.querySelectorAll('.key-numeric')
+const operatorBtns = document.querySelectorAll('.key-operator')
+const clearBtn = document.querySelector('#clear')
+const equalBtn = document.querySelector('#equal')
 const $resultNode = document.querySelector('#result')
 
-const app = new Calculator($resultNode)
+const app = new Calculator($resultNode, createCommand)
 
-numericButtons.forEach((btn) => {
+numericBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
         app.enterDigit(btn.value)
     })
 })
 
+operatorBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+        app.setOperation(btn.value)
+    })
+})
+
 clearBtn.addEventListener('click', () => {
-    app.clear()
+    app.setDefaultState()
+})
+
+equalBtn.addEventListener('click', () => {
+    app.finish()
 })
 
 document.addEventListener('keypress', (event) => {
+    event.preventDefault()
     switch (event.key) {
         case '0':
         case '1':
@@ -40,8 +54,13 @@ document.addEventListener('keypress', (event) => {
         case '/':
         case '+':
         case '-':
-            app.enterOperator(event.key)
+            app.setOperation(event.key)
+            break
+        case '=':
+        case 'Enter':
+            app.finish()
             break
         default:
+            break
     }
 })
