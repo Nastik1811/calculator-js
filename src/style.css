@@ -1,9 +1,4 @@
 :root {
-    --dark-color: rgb(53, 53, 54);
-    --light-color: rgb(255, 255, 255);
-    --accent-color: #00ff62;
-    --background-color: var(--dark-color);
-    --text-color: var(--light-color);
     font-size: 24px;
 }
 
@@ -20,14 +15,13 @@ body {
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    color: var(--text-color);
-    /* background-color: var(--background-color); */
+    color: white;
     background: -webkit-linear-gradient(
         -35deg,
-        var(--accent-color),
+        var(--accentColor),
         rgb(240, 239, 239)
     );
-    background: linear-gradient(180deg, var(--accent-color), rgb(36, 36, 36));
+    background: linear-gradient(180deg, var(--accentColor), rgb(36, 36, 36));
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -49,14 +43,14 @@ body {
 .calculator {
     margin-top: 25px;
     display: grid;
-    grid-template-rows: 20px 1fr auto;
+    grid-template-rows: 1fr auto 20px;
     gap: 28px;
     max-width: 900px;
     width: auto;
     border-radius: 12px;
     background: -webkit-linear-gradient(
         -35deg,
-        var(--accent-color),
+        var(--accentColor),
         rgb(37, 37, 37)
     );
     background: linear-gradient(0deg, rgb(17, 17, 17), rgb(39, 39, 39));
@@ -64,19 +58,19 @@ body {
     background-size: cover;
     box-shadow: 3px 10px 15px rgba(0, 0, 0, 0.26);
 
-    padding: 40px;
+    padding: 40px 40px 30px;
 }
 
 .display {
     display: flex;
     flex-direction: row-reverse;
-    border-bottom: 2px solid var(--accent-color);
+    border-bottom: 2px solid var(--accentColor);
     height: 100%;
     padding: 10px 5px;
 }
 
 #preview {
-    color: var(--accent-color);
+    color: var(--accentColor);
     height: auto;
 }
 
@@ -88,18 +82,33 @@ body {
     text-align: right;
     color: inherit;
 }
-/* 
-.result::-webkit-outer-spin-button,
-.result::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+
+#menu {
+    display: grid;
+    gap: 20px;
+    grid-auto-flow: column;
+    place-self: center;
+    font-size: 0.7rem;
+    color: var(--accentColor);
 }
 
-
-.result[type='number'] {
-    -moz-appearance: textfield;
+.menu-option {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 12px;
+    place-items: center left;
+    cursor: pointer;
 }
- */
+
+.color-input {
+    cursor: pointer;
+    border: none;
+    outline: transparent;
+    background-color: transparent;
+    width: 24px;
+    height: 24px;
+}
+
 .keypad {
     display: flex;
     flex-direction: row-reverse;
@@ -139,21 +148,21 @@ body {
 
 .key:hover,
 .key:focus {
-    color: var(--accent-color);
+    color: var(--accentColor);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .key-main {
     opacity: 1;
-    background-color: var(--accent-color);
-    border: 1px solid var(--accent-color);
+    background-color: var(--accentColor);
+    border: 1px solid var(--accentColor);
     color: black;
 }
 
 .key-main:hover {
     opacity: 0.8;
     color: black;
-    background-color: var(--accent-color);
+    background-color: var(--accentColor);
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3), 0px 0px 8px rgba(0, 0, 0, 0.5);
 }
 
@@ -161,7 +170,7 @@ body {
     outline: none;
     opacity: 0.8;
     color: black;
-    background-color: var(--accent-color);
+    background-color: var(--accentColor);
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3), 0px 0px 8px rgba(0, 0, 0, 0.5);
 }
 

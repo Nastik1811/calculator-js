@@ -101,7 +101,7 @@ export default class Calculator {
                 this.nextOperation = operator
                 break
             case APP_STATE.FINISHED:
-                this.setCurrentValue('0')
+                this.savedValue = '0'
                 this.appState = APP_STATE.READY_FOR_SECOND_OPERAND
                 this.nextOperation = operator
                 break
@@ -128,25 +128,6 @@ export default class Calculator {
         this.setState(APP_STATE.FINISHED)
         this.reset()
     }
-
-    // renderPreview() {
-    //     // eslint-disable-next-line no-console
-    //     console.log(this.appState)
-    //     switch(this.appState) {
-    //         case APP_STATE.ON_FIRST_OPERAND:
-    //             this.$previewNode.innerText = `${this.currentValue}`
-    //             break
-    //         case APP_STATE.READY_FOR_SECOND_OPERAND:
-    //             this.$previewNode.innerText = `${this.savedValue} ${this.nextOperation}`
-    //             break
-    //         case APP_STATE.ON_SECOND_OPERAND:
-    //             this.$previewNode.innerText = `${this.savedValue} ${this.nextOperation} ${this.currentValue}`
-    //             break
-    //         default:
-    //             this.$previewNode.innerText = `0`
-    //     }
-
-    // }
 
     render() {
         this.$resultNode.innerText = this.currentValue

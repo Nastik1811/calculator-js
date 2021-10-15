@@ -1,8 +1,3 @@
-import AddCommand from './commands/AddCommand'
-import DivCommand from './commands/DivCommand'
-import MulCommand from './commands/MulCommand'
-import SubCommand from './commands/SubCommand'
-
 export const BIN_OPERATIONS = {
     ADD: '+',
     SUB: '-',
@@ -31,19 +26,4 @@ export function isBinary(operator) {
 
 export function isUnary(operator) {
     return Object.values(UNARY_OPERATIONS).includes(operator)
-}
-
-export function createCommand(operator, secondOperand, firstOperand) {
-    switch (operator) {
-        case BIN_OPERATIONS.ADD:
-            return new AddCommand(firstOperand, secondOperand)
-        case BIN_OPERATIONS.SUB:
-            return new SubCommand(firstOperand, secondOperand)
-        case BIN_OPERATIONS.DIV:
-            return new DivCommand(firstOperand, secondOperand)
-        case BIN_OPERATIONS.MUL:
-            return new MulCommand(firstOperand, secondOperand)
-        default:
-            throw new Error(`This operator "${operator}" is not supported!`)
-    }
 }

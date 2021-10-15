@@ -2,33 +2,39 @@
 import './style.css'
 
 import Calculator from './Calculator'
-import { createCommand } from './helper'
+import createCommand from './commands/createCommand'
+import ThemeManager from './ThemeManager'
 
-const numericBtns = document.querySelectorAll('.key-numeric')
-const operatorBtns = document.querySelectorAll('.key-operator')
-const clearBtn = document.querySelector('#clear')
-const equalBtn = document.querySelector('#equal')
+const $numericBtns = document.querySelectorAll('.key-numeric')
+const $operatorBtns = document.querySelectorAll('.key-operator')
+const $clearBtn = document.querySelector('#clear')
+const $equalBtn = document.querySelector('#equal')
 const $resultNode = document.querySelector('#result')
+const $menu = document.querySelector('#menu')
+const $root = document.querySelector(':root')
 
 const app = new Calculator($resultNode, createCommand)
+const themeManager = new ThemeManager($menu, $root)
 
-numericBtns.forEach((btn) => {
+themeManager.initColorInput()
+
+$numericBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
         app.enterDigit(btn.value)
     })
 })
 
-operatorBtns.forEach((btn) => {
+$operatorBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
         app.setOperation(btn.value)
     })
 })
 
-clearBtn.addEventListener('click', () => {
+$clearBtn.addEventListener('click', () => {
     app.setDefaultState()
 })
 
-equalBtn.addEventListener('click', () => {
+$equalBtn.addEventListener('click', () => {
     app.finish()
 })
 
