@@ -1,9 +1,8 @@
 // eslint-disable-next-line max-classes-per-file
 import './style.css'
-
 import Calculator from './Calculator'
-import createCommand from './commands/createCommand'
 import ThemeManager from './ThemeManager'
+import createCommand from './commands/createCommand'
 
 const $numericBtns = document.querySelectorAll('.key-numeric')
 const $operatorBtns = document.querySelectorAll('.key-operator')
@@ -12,6 +11,7 @@ const $equalBtn = document.querySelector('#equal')
 const $resultNode = document.querySelector('#result')
 const $menu = document.querySelector('#menu')
 const $root = document.querySelector(':root')
+const $decimal = document.querySelector('#decimal')
 
 const app = new Calculator($resultNode, createCommand)
 const themeManager = new ThemeManager($menu, $root)
@@ -31,11 +31,15 @@ $operatorBtns.forEach((btn) => {
 })
 
 $clearBtn.addEventListener('click', () => {
-    app.setDefaultState()
+    app.clear()
 })
 
 $equalBtn.addEventListener('click', () => {
     app.finish()
+})
+
+$decimal.addEventListener('click', () => {
+    app.addDecimalPoint()
 })
 
 document.addEventListener('keypress', (event) => {

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const propName = 'accentColor'
 
 export default class ThemeManager {
@@ -10,7 +9,6 @@ export default class ThemeManager {
 
     getThemeFromStorage() {
         const storedValue = localStorage.getItem(propName)
-        console.log(storedValue)
         if (storedValue) {
             this.setColor(storedValue)
         } else {

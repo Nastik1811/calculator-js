@@ -11,19 +11,23 @@ export default class Calculator {
     constructor($resultNode, createCommand) {
         this.$resultNode = $resultNode
         this.createCommand = createCommand
-        this.setDefaultState()
+        this.init()
     }
 
-    setDefaultState() {
-        this.currentValue = '0'
+    init() {
         this.appState = APP_STATE.FINISHED
-        this.reset()
-        this.render()
-    }
-
-    reset() {
+        this.currentValue = '0'
         this.savedValue = null
         this.nextOperation = null
+    }
+
+    setAppState(newState) {
+        this.appState = newState
+    }
+
+    setCurrentValue(value) {
+        this.currentValue = value
+        this.render()
     }
 
     enterDigit(value) {
@@ -38,11 +42,11 @@ export default class Calculator {
                 break
             case APP_STATE.READY_FOR_SECOND_OPERAND:
                 this.setCurrentValue(value)
-                this.setState(APP_STATE.ON_SECOND_OPERAND)
+                this.setAppState(APP_STATE.ON_SECOND_OPERAND)
                 break
             case APP_STATE.FINISHED:
-                this.setState(APP_STATE.ON_FIRST_OPERAND)
                 this.setCurrentValue(value)
+                this.setAppState(APP_STATE.ON_FIRST_OPERAND)
                 break
             default:
                 this.setCurrentValue(value)
@@ -51,20 +55,11 @@ export default class Calculator {
 
     addDecimalPoint() {
         if (this.appState === APP_STATE.FINISHED) {
-            this.setState(APP_STATE.ON_FIRST_OPERAND)
+            this.setAppState(APP_STATE.ON_FIRST_OPERAND)
         }
         if (!this.currentValue.includes('.')) {
             this.setCurrentValue(`${this.currentValue}.`)
         }
-    }
-
-    setState(newState) {
-        this.appState = newState
-    }
-
-    setCurrentValue(value) {
-        this.currentValue = value
-        this.render()
     }
 
     setOperation(operator) {
@@ -90,25 +85,23 @@ export default class Calculator {
         switch (this.appState) {
             case APP_STATE.ON_FIRST_OPERAND:
                 this.savedValue = this.currentValue
-                this.setState(APP_STATE.READY_FOR_SECOND_OPERAND)
-                this.nextOperation = operator
+                this.setAppState(APP_STATE.READY_FOR_SECOND_OPERAND)
                 break
             case APP_STATE.READY_FOR_SECOND_OPERAND:
-                this.nextOperation = operator
                 break
             case APP_STATE.ON_SECOND_OPERAND:
                 this.calculate()
                 this.savedValue = this.currentValue
-                this.nextOperation = operator
                 break
             case APP_STATE.FINISHED:
                 this.savedValue = '0'
-                this.appState = APP_STATE.READY_FOR_SECOND_OPERAND
-                this.nextOperation = operator
+                this.setCurrentValue('0')
+                this.setAppState(APP_STATE.READY_FOR_SECOND_OPERAND)
                 break
             default:
-                this.appState = APP_STATE.FINISHED
+                this.setAppState(APP_STATE.FINISHED)
         }
+        this.nextOperation = operator
     }
 
     calculate() {
@@ -120,15 +113,27 @@ export default class Calculator {
         const result = command.execute()
         this.setCurrentValue(result.toString())
         this.savedValue = this.currentValue
-        this.setState(APP_STATE.READY_FOR_SECOND_OPERAND)
+        this.nextOperation = null
+        this.setAppState(APP_STATE.READY_FOR_SECOND_OPERAND)
     }
 
     finish() {
         if (this.nextOperation) {
             this.calculate()
         }
-        this.setState(APP_STATE.FINISHED)
         this.reset()
+    }
+
+    clear() {
+        this.setCurrentValue('0')
+        this.reset()
+        this.render()
+    }
+
+    reset() {
+        this.setAppState(APP_STATE.FINISHED)
+        this.savedValue = null
+        this.nextOperation = null
     }
 
     render() {

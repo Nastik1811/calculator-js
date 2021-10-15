@@ -2,6 +2,7 @@ import { BIN_OPERATIONS, UNARY_OPERATIONS } from '../helper'
 import AddCommand from './AddCommand'
 import DivCommand from './DivCommand'
 import MulCommand from './MulCommand'
+import ModCommand from './ModCommand'
 import PowerCommand from './PowerCommand'
 import SqrtCommand from './SqrtCommand'
 import SubCommand from './SubCommand'
@@ -19,7 +20,7 @@ export default function createCommand(operator, secondOperand, firstOperand) {
         case BIN_OPERATIONS.MUL:
             return new MulCommand(firstOperand, secondOperand)
         case BIN_OPERATIONS.MOD:
-            return new MulCommand(firstOperand, secondOperand)
+            return new ModCommand(firstOperand, secondOperand)
         case BIN_OPERATIONS.POWER:
             return new PowerCommand(firstOperand, secondOperand)
         case BIN_OPERATIONS.Y_SQRT:
@@ -35,7 +36,7 @@ export default function createCommand(operator, secondOperand, firstOperand) {
         case UNARY_OPERATIONS.LN:
             return new LogCommand(firstOperand)
         case UNARY_OPERATIONS.LG:
-            return new (firstOperand, 10)()
+            return new LogCommand(firstOperand, 10)
         case UNARY_OPERATIONS.TENX:
             return new PowerCommand(10, firstOperand)
         case UNARY_OPERATIONS.EX:
