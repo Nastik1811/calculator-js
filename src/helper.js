@@ -3,20 +3,20 @@ export const BIN_OPERATIONS = {
     SUB: '-',
     MUL: '*',
     DIV: '/',
-    MOD: '%',
-    POWER_OF_Y: 'x^y',
+    MOD: 'mod',
+    POWER: 'xy',
     Y_SQRT: 'ysqrt',
 }
 
 export const UNARY_OPERATIONS = {
-    NEG: '+/-',
-    POWER_OF_TWO: '2^x',
-    SQUARE: 'x^2',
+    NEG: 'neg',
+    POWER_OF_TWO: '2nd',
+    SQUARE: 'x2',
     SQRT: 'sqrt',
     LN: 'ln',
     LG: 'lg',
     TENX: '10x',
-    EX: 'e^x',
+    EX: 'ex',
     REVERSE: '1/x',
 }
 

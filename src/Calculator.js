@@ -81,6 +81,7 @@ export default class Calculator {
         if (this.nextOperation) {
             this.calculate()
         }
+        this.savedValue = this.currentValue
         this.nextOperation = operator
         this.calculate()
     }
@@ -118,6 +119,7 @@ export default class Calculator {
         )
         const result = command.execute()
         this.setCurrentValue(result.toString())
+        this.savedValue = this.currentValue
         this.setState(APP_STATE.READY_FOR_SECOND_OPERAND)
     }
 

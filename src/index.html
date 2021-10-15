@@ -9,15 +9,15 @@
 <body>
     <div id="root">
         <div class="container">
-            <div id="calculator" class="calculator" >
+            <div id="calculator" class="calculator">
                 <div class="display">
                     <span id="result">0</span>
                 </div>
                 <div class="keypad">
                     <div class="base-operations">
                             <button id="clear" class="key">AC</button>
-                            <button class="key key-operator">+/-</button>
-                            <button class="key key-operator">%</button>
+                            <button class="key key-operator" value="neg">+/-</button>
+                            <button class="key key-operator" value="mod">%</button>
                             <button class="key key-operator key-main" value="/">/</button>
 
                             <button class="key key-numeric" value="7">7</button>
@@ -40,16 +40,16 @@
                             <button id="equal" class="key key-main">=</button>
                     </div>
                     <div class="advanced-operations">
-                        <button class="key key-operator">2nd</button>
-                        <button class="key key-operator">x^2</button>
-                        <button class="key key-operator">x^y</button>
-                        <button class="key key-operator">e^x</button>
-                        <button class="key key-operator">10^x</button>
-                        <button class="key key-operator">1/x</button>
-                        <button class="key key-operator">√x</button>
-                        <button class="key key-operator">√nx</button>
-                        <button class="key key-operator">lnx</button>
-                        <button class="key key-operator">lgx</button>
+                        <button class="key key-operator" value="2nd"><span class="power">2<sup>x</sup></span></button>
+                        <button class="key key-operator" value="x2"><span class="power">x<sup>2</sup></span></button>
+                        <button class="key key-operator" value="xy"><span class="power">x<sup>y</sup></span></button>
+                        <button class="key key-operator" value="ex"><span class="power">e<sup>x</sup></span></button>
+                        <button class="key key-operator" value="10x"><span class="power">10<sup>x</sup></span></button>
+                        <button class="key key-operator" value="1/x">1/x</button>
+                        <button class="key key-operator" value="sqrt">√x</button>
+                        <button class="key key-operator" value="ysqrt"><span class="sqrt">√<sup>y</sup>x</span></button>
+                        <button class="key key-operator" value="ln">lnx</button>
+                        <button class="key key-operator" value="lg">lgx</button>
                     </div>
                 </div>
                 <div id="menu"> 
