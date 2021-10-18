@@ -10,8 +10,9 @@ export const APP_STATE = {
 const invalidValueMessage = 'Not a number'
 
 export default class Calculator {
-    constructor($resultNode, createCommand) {
+    constructor($resultNode, $operationIndicator, createCommand) {
         this.$resultNode = $resultNode
+        this.$operationIndicator = $operationIndicator
         this.createCommand = createCommand
         this.init()
     }
@@ -21,6 +22,7 @@ export default class Calculator {
         this.currentValue = '0'
         this.savedValue = null
         this.nextOperation = null
+        this.updateIndicator()
     }
 
     setAppState(newState) {
@@ -43,8 +45,8 @@ export default class Calculator {
                 }
                 break
             case APP_STATE.READY_FOR_SECOND_OPERAND:
-                this.setCurrentValue(value)
                 this.setAppState(APP_STATE.ON_SECOND_OPERAND)
+                this.setCurrentValue(value)
                 break
             case APP_STATE.FINISHED:
                 this.setCurrentValue(value)
@@ -96,7 +98,7 @@ export default class Calculator {
                 this.savedValue = this.currentValue
                 break
             case APP_STATE.FINISHED:
-                this.savedValue = '0'
+                this.savedValue = this.currentValue
                 this.setCurrentValue('0')
                 this.setAppState(APP_STATE.READY_FOR_SECOND_OPERAND)
                 break
@@ -104,6 +106,7 @@ export default class Calculator {
                 this.setAppState(APP_STATE.FINISHED)
         }
         this.nextOperation = operator
+        this.updateIndicator()
     }
 
     calculate() {
@@ -124,11 +127,27 @@ export default class Calculator {
         }
     }
 
+    updateIndicator() {
+        switch (this.appState) {
+            case APP_STATE.READY_FOR_SECOND_OPERAND:
+                this.$operationIndicator.innerText = `${this.savedValue} ${this.nextOperation}`
+                break
+            case APP_STATE.ON_SECOND_OPERAND:
+                this.$operationIndicator.innerText = `${this.savedValue} ${this.nextOperation} ${this.currentValue}`
+                break
+            case APP_STATE.FINISHED:
+            case APP_STATE.ON_FIRST_OPERAND:
+            default:
+                this.$operationIndicator.innerText = `${this.currentValue}`
+        }
+    }
+
     finish() {
         if (this.nextOperation) {
             this.calculate()
         }
         this.reset()
+        this.updateIndicator()
     }
 
     clear() {
@@ -145,5 +164,6 @@ export default class Calculator {
 
     render() {
         this.$resultNode.innerText = this.currentValue
+        this.updateIndicator()
     }
 }

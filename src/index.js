@@ -8,11 +8,12 @@ const $operatorBtns = document.querySelectorAll('.key-operator')
 const $clearBtn = document.querySelector('#clear')
 const $equalBtn = document.querySelector('#equal')
 const $resultNode = document.querySelector('#result')
+const $indicator = document.querySelector('#indicator')
 const $menu = document.querySelector('#menu')
 const $root = document.querySelector(':root')
 const $decimal = document.querySelector('#decimal')
 
-const app = new Calculator($resultNode, createCommand)
+const app = new Calculator($resultNode, $indicator, createCommand)
 const themeManager = new ThemeManager($menu, $root)
 
 themeManager.initColorInput()
