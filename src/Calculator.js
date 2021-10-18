@@ -7,6 +7,8 @@ export const APP_STATE = {
     FINISHED: 'finished',
 }
 
+const invalidValueMessage = 'Not a number'
+
 export default class Calculator {
     constructor($resultNode, createCommand) {
         this.$resultNode = $resultNode
@@ -111,10 +113,15 @@ export default class Calculator {
             this.savedValue
         )
         const result = command.execute()
-        this.setCurrentValue(result.toString())
-        this.savedValue = this.currentValue
-        this.nextOperation = null
-        this.setAppState(APP_STATE.READY_FOR_SECOND_OPERAND)
+        if (!Number.isNaN(result)) {
+            this.setCurrentValue(result.toString())
+            this.savedValue = this.currentValue
+            this.nextOperation = null
+            this.setAppState(APP_STATE.READY_FOR_SECOND_OPERAND)
+        } else {
+            this.setCurrentValue(invalidValueMessage)
+            this.reset()
+        }
     }
 
     finish() {

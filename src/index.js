@@ -1,4 +1,3 @@
-// eslint-disable-next-line max-classes-per-file
 import './style.css'
 import Calculator from './Calculator'
 import ThemeManager from './ThemeManager'

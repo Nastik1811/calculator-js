@@ -1,7 +1,8 @@
 import Command from './Command'
+import { round } from './utils'
 
 export default class PowerCommand extends Command {
     execute() {
-        return this.firstOperand ** this.secondOperand
+        return round(this.firstOperand ** this.secondOperand)
     }
 }
