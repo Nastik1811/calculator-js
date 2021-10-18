@@ -1,0 +1,234 @@
+:root {
+    font-size: 24px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    background: -webkit-linear-gradient(
+        -35deg,
+        var(--accentColor),
+        rgb(240, 239, 239)
+    );
+    background: linear-gradient(180deg, var(--accentColor), rgb(36, 36, 36));
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#root {
+    min-height: 100%;
+    display: grid;
+}
+
+.container {
+}
+
+.title {
+    font-size: 48px;
+    margin: 12px auto;
+}
+
+.calculator {
+    margin: 25px auto;
+    display: grid;
+    grid-template-rows: 1fr auto 20px;
+    gap: 28px;
+    max-width: 560px;
+    width: auto;
+    border-radius: 12px;
+    background: -webkit-linear-gradient(
+        -35deg,
+        var(--accentColor),
+        rgb(37, 37, 37)
+    );
+    background: linear-gradient(0deg, rgb(17, 17, 17), rgb(39, 39, 39));
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-shadow: 3px 10px 15px rgba(0, 0, 0, 0.26);
+    padding: 40px 40px 30px;
+}
+
+.display {
+    display: flex;
+    flex-direction: row-reverse;
+    border-bottom: 2px solid var(--accentColor);
+    height: 100%;
+    padding: 15px 5px;
+    align-items: flex-end;
+}
+
+#preview {
+    color: var(--accentColor);
+    height: auto;
+}
+
+#result {
+    font-size: 1.3rem;
+    background-color: transparent;
+    border: none;
+    outline: transparent;
+    text-align: right;
+    color: inherit;
+}
+
+#menu {
+    display: grid;
+    gap: 20px;
+    grid-auto-flow: column;
+    place-self: center;
+    font-size: 0.7rem;
+    color: var(--accentColor);
+}
+
+.menu-option {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 12px;
+    place-items: center left;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.1s ease-out;
+}
+
+.menu-option:hover {
+    opacity: 1;
+}
+
+.color-input {
+    cursor: pointer;
+    border: none;
+    outline: transparent;
+    background-color: transparent;
+    width: 24px;
+    height: 24px;
+}
+
+.keypad {
+    place-self: center;
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 20px;
+}
+
+.base-operations {
+    display: grid;
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.advanced-operations {
+    display: grid;
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.key {
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    min-width: 68px;
+    height: 68px;
+    /* border: 1px solid rgba(0, 0, 0, 0.3); */
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1s);
+    border: none;
+    background-color: rgba(40, 40, 40, 1);
+    color: inherit;
+    font-size: inherit;
+    transition: all 0.1s ease-out;
+}
+
+.key:hover,
+.key:focus {
+    color: var(--accentColor);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.key-main {
+    opacity: 1;
+    background-color: var(--accentColor);
+    border: 1px solid var(--accentColor);
+    color: black;
+}
+
+.key-main:hover {
+    opacity: 0.8;
+    color: black;
+    background-color: var(--accentColor);
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3), 0px 0px 8px rgba(0, 0, 0, 0.5);
+}
+
+.key-main:focus {
+    outline: none;
+    opacity: 0.8;
+    color: black;
+    background-color: var(--accentColor);
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3), 0px 0px 8px rgba(0, 0, 0, 0.5);
+}
+
+.key-numeric {
+}
+
+.key-extened {
+    grid-column: span 2;
+}
+
+.power,
+.sqrt {
+    position: relative;
+}
+
+.power sup {
+    position: absolute;
+    font-size: 0.5rem;
+    right: -7px;
+    top: -5px;
+}
+
+.sqrt sup {
+    position: absolute;
+    font-size: 0.5rem;
+    left: 3px;
+    top: -5px;
+}
+
+@media (max-width: 480px) {
+    .calculator {
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+        border-radius: 0;
+        height: 100%;
+        padding: 40px 30px;
+    }
+
+    .key {
+        min-width: 40px;
+        min-height: 40px;
+    }
+
+    .keypad {
+        width: 100%;
+        flex-direction: column;
+    }
+    .advanced-operations {
+        display: grid;
+        grid-template-rows: repeat(2, 1fr);
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
